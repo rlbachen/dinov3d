@@ -92,3 +92,26 @@ class MaskingGenerator:
         to_add = np.random.choice(np.where(~m2)[0], size=num_masking_patches - m2.sum(), replace=False)
         m2[to_add] = True
         return m2.reshape(shape)
+
+
+class MaskingGenerator3d:
+    def __init__(self, input_size):
+        if not isinstance(input_size, tuple):
+            input_size = (input_size,) * 3
+        self.depth, self.height, self.width = input_size
+        self.num_patches = self.height * self.width * self.depth
+
+    def __repr__(self):
+        repr_str = f"Generator({self.depth}, {self.height}, {self.width})"
+        return repr_str
+
+    def get_shape(self):
+        return self.depth, self.height, self.width
+
+    def __call__(self, num_masking_patches=0):
+        mask = np.zeros(shape=self.get_shape(), dtype=bool)
+
+        mask_indicies = random.sample(range(self.num_patches), k=num_masking_patches)
+        mask.ravel()[mask_indicies] = 1
+
+        return mask

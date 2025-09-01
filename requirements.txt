@@ -7,3 +7,6 @@ termcolor
 torch
 torchmetrics
 torchvision
+monai==1.4.0 # this fixes weird 32bit int overflow in random seed
+boto3
+nibabel

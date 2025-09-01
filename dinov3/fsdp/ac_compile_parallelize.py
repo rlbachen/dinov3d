@@ -46,9 +46,9 @@ def ac_compile_parallelize(
     2/ Compile blocks
     3/ FSDP blocks + global model
     """
-    assert (
-        isinstance(trained_model, nn.ModuleDict) and "backbone" in trained_model.keys()
-    ), f"{trained_model} does not contain a backbone?"
+    assert isinstance(trained_model, nn.ModuleDict) and "backbone" in trained_model.keys(), (
+        f"{trained_model} does not contain a backbone?"
+    )
     logger.info("DISTRIBUTED FSDP -- preparing model for distributed training")
     if utils.has_batchnorms(trained_model):
         raise NotImplementedError

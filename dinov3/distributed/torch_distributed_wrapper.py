@@ -262,7 +262,12 @@ def enable_distributed(
         torch.cuda.set_device(torch_env.local_rank)
 
     dist.init_process_group(backend="nccl", timeout=timeout)
-    dist.barrier()
+
+    # NEW: tell barrier which device this rank uses
+    if torch.cuda.is_available():
+        dist.barrier(device_ids=[torch_env.local_rank])
+    else:
+        dist.barrier()
 
     if restrict_print_to_main_process:
         _restrict_print_to_main_process()

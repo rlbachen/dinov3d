@@ -1,0 +1,28 @@
+FROM pytorch/pytorch:2.7.1-cuda12.6-cudnn9-runtime
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y \
+git wget && rm -rf /var/lib/apt/lists/*
+
+RUN wget https://github.com/peak/s5cmd/releases/download/v2.2.2/s5cmd_2.2.2_Linux-64bit.tar.gz && \
+    tar xvf s5cmd_2.2.2_Linux-64bit.tar.gz && \
+    mv s5cmd /usr/local/bin/ && \
+    rm s5cmd_2.2.2_Linux-64bit.tar.gz
+
+
+COPY . /app/dinov3/
+
+RUN mv /app/dinov3/dinov3_docker/scripts /app/scripts
+
+RUN pip install --no-cache-dir -r /app/dinov3/requirements.txt
+
+WORKDIR /app/dinov3
+
+RUN pip install . && \
+    pip install boto3
+
+ENV PYTHONPATH=/app/dinov3:$PYTHONPATH
+WORKDIR /app
+
+CMD ["/bin/bash", "-c", "sleep infinity"]

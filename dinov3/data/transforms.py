@@ -200,9 +200,9 @@ class MultipleResize(object):
         if hasattr(img, "shape"):
             h, w = img.shape[-2:]
         else:
-            assert isinstance(
-                img, PIL.Image.Image
-            ), f"img should have a `shape` attribute or be a PIL Image, got {type(img)}"
+            assert isinstance(img, PIL.Image.Image), (
+                f"img should have a `shape` attribute or be a PIL Image, got {type(img)}"
+            )
             w, h = img.size
         new_h, new_w = [math.ceil(s / self.multiple) * self.multiple for s in (h, w)]
         resized_image = transforms.functional.resize(img, (new_h, new_w))
