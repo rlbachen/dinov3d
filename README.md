@@ -8,12 +8,10 @@ imaging data.
 We Provide a pretrained 3d VIT model, trained from scratch on over 90K Anatomical MRI
 scans from the FOMO300k dataset.
 
-Abstract: XXX
 
 # Weight Availability
 
-The models weight for the trained model, as well as a number of checkpoints are
-available on the Hugging Face repo here XXX
+The models weight for the trained model will be available on hugging face shortly!
 
 # Usage
 
@@ -21,8 +19,14 @@ The repo can be installed locally by simply pip installing the directory after c
 
 Simply run ``git clone git@github.com:asagilmore/dinov3d.git``, and then ``pip install ./path/to/dinov3d``
 
+We also provide a [docker image](.docs/usage/docker.md) for easy deployment, both for training and inference.
+
+
+
 
 ## Inference
+
+
 Local usage requires a substantial amount of memory. For high resolution inference,
 it is recommended to use a CPU with a large amount of memory, as many GPU's do not have the
 required vRAM to support this.
