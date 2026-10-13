@@ -27,8 +27,6 @@ def load_teacher_model_for_inference(
     model, embed_dim = build_model_from_cfg_3d(cfg, only_teacher=True)
 
     if teacher_ckpt_path:
-        print("warning, no ckpt path, random initalization")
-
         model.to_empty(device=device, recurse=True)
         checkpoint = torch.load(teacher_ckpt_path, map_location=device)
         state_dict = checkpoint["teacher"]
@@ -45,6 +43,7 @@ def load_teacher_model_for_inference(
             print("Missing keys:", missing)
             print("Unexpected keys:", unexpected)
     else:
+        print("warning, no ckpt path, random initialization")
         model = model.to_empty(device=device)
         model.init_weights()
         model.to(device)
